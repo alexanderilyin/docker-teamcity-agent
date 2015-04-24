@@ -1,13 +1,20 @@
-FROM alexanderilyin/docker-java
+FROM java
 
 MAINTAINER Alexander Ilyin <ailyin@anchorfree.com>
 
-RUN yum install --assumeyes unzip
-RUN curl -LOv https://teamcity.jetbrains.com/update/buildAgent.zip
-RUN unzip buildAgent.zip -d /opt/buildAgent
-#CMD tar xvf TeamCity-9.0.3.tar.gz -C /opt/
-#CMD rm -fv TeamCity-9.0.3.tar.gz
+ADD https://teamcity.jetbrains.com/update/buildAgent.zip /opt/buildAgent.zip
+RUN unzip /opt/buildAgent.zip -d /opt/buildAgent
+RUN rm -rfv buildAgent.zip
+RUN chmod -c +x /opt/buildAgent/bin/agent.sh
 
-#ENTRYPOINT JAVA_HOME=/usr/lib/jvm/jre-1.7.0-openjdk.x86_64 /opt/TeamCity/bin/runAll.sh start && tail -F /opt/TeamCity/logs/teamcity-server.log
+RUN echo serverUrl=http://server:8111/ > /opt/buildAgent/conf/buildAgent.properties
+RUN echo authorizationToken= >> /opt/buildAgent/conf/buildAgent.properties
+RUN echo name= >> /opt/buildAgent/conf/buildAgent.properties
+RUN echo ownPort=9090 >> /opt/buildAgent/conf/buildAgent.properties
+RUN echo systemDir=../system >> /opt/buildAgent/conf/buildAgent.properties
+RUN echo tempDir=../temp >> /opt/buildAgent/conf/buildAgent.properties
+RUN echo workDir=../work >> /opt/buildAgent/conf/buildAgent.properties
+
+CMD /opt/buildAgent/bin/agent.sh run
 
 EXPOSE 9090
