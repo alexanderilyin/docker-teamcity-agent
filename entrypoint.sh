@@ -4,6 +4,14 @@ set -e
 # RUN DOCKER
 service docker start
 
+function shutdown {
+  # There are no more loopback devices available.
+  # Shutting down daemon due to errors: error intializing graphdriver: loopback mounting failed
+  service docker stop
+}
+
+trap shutdown EXIT
+
 # CONFIGURE TEAMCITY BUILD AGENT
 BUILD_AGENT_PROPERTIES_DEFAULT_FILE=/opt/buildAgent/conf/buildAgent.dist.properties
 BUILD_AGENT_PROPERTIES_FILE=/opt/buildAgent/conf/buildAgent.properties
