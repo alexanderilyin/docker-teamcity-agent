@@ -7,7 +7,7 @@ QUICKSTART
 ENTRYPOINT
 ==========
 
-Override default values in in `buildAgent.properties` using options in `/entrypoint.sh`
+Override default values in `buildAgent.properties` using options in `/entrypoint.sh`
 
     -u Set serverUrl
     -n Set name
