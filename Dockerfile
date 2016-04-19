@@ -19,6 +19,6 @@ RUN apt-get update \
 
 COPY entrypoint.sh /entrypoint.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
+VOLUME [ "/opt/buildAgent/work", "/opt/buildAgent/logs"]
 
-EXPOSE 9090
+ENTRYPOINT ["/entrypoint.sh"]

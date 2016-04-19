@@ -2,7 +2,7 @@ QUICKSTART
 ==========
 
     docker pull alexanderilyin/docker-teamcity-agent
-    docker run -ti --privileged=true alexanderilyin/docker-teamcity-agent -u http://server:8111/
+    sudo docker run --restart=always -d -p 9091:9091 -v /var/run/docker.sock:/run/docker.sock alexanderilyin/docker-teamcity-agent:latest -u http://10.0.0.120:8111  -p 9091
 
 ENTRYPOINT
 ==========
